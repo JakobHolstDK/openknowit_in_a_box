@@ -170,7 +170,8 @@ def create_virtual_server(hostname, size, meta_data):
     ]
 
     # Execute the virt-install command
-    pid= subprocess.Popen(command, close_fds=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    pid=subprocess.Popen(command, close_fds=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    print(type(pid))
     return pid
 
 
