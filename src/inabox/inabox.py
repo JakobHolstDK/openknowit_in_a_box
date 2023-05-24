@@ -179,16 +179,12 @@ def create_virtual_server(hostname, size, meta_data):
        pass 
     location = "http://mirror.one.com/debian-cd/current-live/amd64/iso-hybrid/debian-live-10.8.0-amd64-standard.iso"
     command = [
-        'virt-install',
-        '--name', hostname,
-        '--memory', memsize,
-        '--disk', disksize,
-        '--location', location, 
-        '--os-variant', 'debian10',
-        '--network', 'bridge=virbr0',
-        '--graphics', 'none',
-        '--console', 'pty,target_type=serial',
-        '--extra-args', f'auto=true priority=critical url=file:/preseed.cfg'
+       "virt-install", 
+       "--install","debian11",
+       "--name" , hostname,
+       "--initrd-inject" , "./preseed.cfg",
+       "--extra-args", "debian/priority=critical", 
+       "--noreboot"
     ]
 
     # Execute the virt-install command
