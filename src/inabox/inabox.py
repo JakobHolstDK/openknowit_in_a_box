@@ -173,12 +173,31 @@ def create_virtual_server(hostname, size, meta_data):
         disksize = "size=" + str(mb_to_bytes(int(size['disk_size'].replace("T", "")) * 1024 * 1024))
     except:
        pass
-    
+    try:
+      if size['memory'] == "auto":
+        memsize = str(mb_to_bytes(10000))
+    except:
+       pass
+    try:
+      if size['memory'].endswith("M"):
+        memsize = str(mb_to_bytes(int(size['memory'].replace("M", ""))))
+    except:
+      pass
+    try:
+      if size['memory'].endswith("G"):
+       memsize = str(mb_to_bytes(int(size['memory'].replace("G", "")) * 1024))
+    except:
+      pass
+    try:
+      if size['memory'].endswith("T"):
+        memsize = str(mb_to_bytes(int(size['memory'].replace("T", "")) * 1024 * 1024))
+    except:
+       pass 
 
     command = [
         'virt-install',
         '--name', hostname,
-        '--memory', str(size["memory"]),
+        '--memory', memsize,
         '--disk', disksize,
         '--cdrom', meta_data['iso_path'],
         '--os-variant', 'debian10',
