@@ -183,7 +183,7 @@ def create_virtual_server(hostname, size, meta_data):
         '--name', hostname,
         '--memory', memsize,
         '--disk', disksize,
-        '--cdrom', meta_data['iso_path'],
+        '--location', meta_data['iso_path'],
         '--os-variant', 'debian10',
         '--network', 'bridge=virbr0',
         '--graphics', 'none',
