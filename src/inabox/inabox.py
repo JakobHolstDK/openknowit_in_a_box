@@ -160,7 +160,7 @@ def mb_to_bytes(mb):
 
 def spawn_process(command, stdout_file, stderr_file):
     full_command = f"nohup {command} >{stdout_file} 2>{stderr_file} &"
-    process = subprocess.Popen(full_command, shell=True)
+    process = subprocess.Popen(full_command, shell=False)
     return process
 
 def create_virtual_server(hostname, size, meta_data):
