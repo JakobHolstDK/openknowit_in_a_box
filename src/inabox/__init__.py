@@ -15,10 +15,6 @@ def main():
     args = parser.parse_args()
     if args.action[0] == 'up':
         print("Starting inabox")
-        inabox.main()
-        print("inabox started")
-        
-
         
     else:
         print("Invalid action. Use --help for more information.")
