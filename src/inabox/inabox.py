@@ -158,9 +158,10 @@ def mb_to_bytes(mb):
   bytes = mb * 1024 * 1024
   return bytes 
 
-def spawn_process(command):
-    process = subprocess.Popen(command, shell=False, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    return process
+def spawn_process(command, stdout_file, stderr_file):
+    with open(stdout_file, 'w') as stdout, open(stderr_file, 'w') as stderr:
+        process = subprocess.Popen(command, shell=True, stdout=stdout, stderr=stderr)
+        return process
 
 def create_virtual_server(hostname, size, meta_data):
     # check if we have a preseedfile 
