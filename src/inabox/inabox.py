@@ -177,7 +177,7 @@ def create_virtual_server(hostname, size, meta_data):
         memsize = str(mb_to_bytes(int(size['memory'].replace("T", "")) * 1024 * 1024))
     except:
        pass 
-    location = "https://artifacts.openknowit.com/files/inabox/debian10.iso"
+    location = "http://mirror.one.com/debian-cd/current-live/amd64/iso-hybrid/debian-live-10.8.0-amd64-standard.iso"
     command = [
         'virt-install',
         '--name', hostname,
