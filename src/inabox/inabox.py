@@ -177,13 +177,13 @@ def create_virtual_server(hostname, size, meta_data):
         memsize = str(mb_to_bytes(int(size['memory'].replace("T", "")) * 1024 * 1024))
     except:
        pass 
-
+    location = "file://"+ meta_data['iso_path']
     command = [
         'virt-install',
         '--name', hostname,
         '--memory', memsize,
         '--disk', disksize,
-        '--location', meta_data['iso_path'],
+        '--location', location, 
         '--os-variant', 'debian10',
         '--network', 'bridge=virbr0',
         '--graphics', 'none',
