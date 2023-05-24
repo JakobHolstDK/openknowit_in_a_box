@@ -153,20 +153,33 @@ def create_virtual_server(hostname, size, meta_data):
         exit(1)
       
     # Construct the virt-install command with preseeding options
-    if size['disk_size'] == "auto":
-      disksize = mb_to_bytes(10000)
-    if size['disk_size'].endswith("M"):
-      disksize = mb_to_bytes(int(size['disk_size'].replace("M", "")))
-    if size['disk_size'].endswith("G"):
-      disksize = mb_to_bytes(int(size['disk_size'].replace("G", "")) * 1024)
-    if size['disk_size'].endswith("T"):
-      disksize = mb_to_bytes(int(size['disk_size'].replace("T", "")) * 1024 * 1024)
+    try:
+      if size['disk_size'] == "auto":
+        disksize = "size=" + str(mb_to_bytes(10000))
+    except:
+       pass
+    try:
+      if size['disk_size'].endswith("M"):
+        disksize = "size=" + str(mb_to_bytes(int(size['disk_size'].replace("M", ""))))
+    except:
+      pass
+    try:
+      if size['disk_size'].endswith("G"):
+       disksize = "size=" + str(mb_to_bytes(int(size['disk_size'].replace("G", "")) * 1024))
+    except:
+      pass
+    try:
+      if size['disk_size'].endswith("T"):
+        disksize = "size=" + str(mb_to_bytes(int(size['disk_size'].replace("T", "")) * 1024 * 1024))
+    except:
+       pass
+    
 
     command = [
         'virt-install',
         '--name', hostname,
         '--memory', str(size["memory"]),
-        '--disk', "size={disk_size}",
+        '--disk', disksize,
         '--cdrom', meta_data['iso_path'],
         '--os-variant', 'debian10',
         '--network', 'bridge=virbr0',
