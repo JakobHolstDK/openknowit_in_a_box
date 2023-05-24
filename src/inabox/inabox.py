@@ -112,7 +112,6 @@ def check_the_hosts(hosts, meta_data):
           process = create_virtual_server(vm_name,size,  meta_data)
           print("Waiting for process to finish")
           print(process.pid)
-          process.wait()
           processes[vm_name] = process
 
     for process in processes.values():
@@ -244,7 +243,6 @@ def main():
     print("Failed to check the hosts")
     exit(1)
   print_status()
-  os.sleep(50)
 
 
   
@@ -253,3 +251,4 @@ def main():
 
 
 
+wait
