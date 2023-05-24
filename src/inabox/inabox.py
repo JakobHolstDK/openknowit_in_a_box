@@ -110,7 +110,7 @@ def check_the_hosts(hosts, meta_data):
           size="small"
           pid = create_virtual_server(vm_name,size,  meta_data)
           print(pid)
-          
+
     for pid in pids:
       pid.wait()
 
@@ -154,6 +154,7 @@ def mb_to_bytes(mb):
 
 def spawn_process(command):
     process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    os.sleep(5)
     return process.pid
 
 def create_virtual_server(hostname, size, meta_data):
