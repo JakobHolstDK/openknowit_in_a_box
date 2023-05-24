@@ -108,7 +108,9 @@ def check_the_hosts(hosts, meta_data):
         else:
           print("We dont have a vm")
           size="small"
-          pids.append = create_virtual_server(vm_name,size,  meta_data)
+          pid = create_virtual_server(vm_name,size,  meta_data)
+          print(pid)
+          
     for pid in pids:
       pid.wait()
 
