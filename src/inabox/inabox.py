@@ -166,7 +166,7 @@ def create_virtual_server(hostname, size, meta_data):
         'virt-install',
         '--name', hostname,
         '--memory', str(size["memory"]),
-        '--disk', f'size='disk_size,
+        '--disk', "size={disk_size}",
         '--cdrom', meta_data['iso_path'],
         '--os-variant', 'debian10',
         '--network', 'bridge=virbr0',
