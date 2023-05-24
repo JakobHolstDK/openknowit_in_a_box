@@ -54,11 +54,11 @@ def read_config():
 
   try:
       iso_path = inabox_config['iso_path']
-      preeseed_path = inabox_config['preeseed_path']
+      preseed_path = inabox_config['preseed_path']
   except:
-      print("Failed to read iso or preeseed path")
+      print("Failed to read iso or preseed path")
       inabox_config['iso_path'] = "iso/debian10.iso"
-      inabox_config['preeseed_path'] = "preeseed.cfg"
+      inabox_config['preseed_path'] = "preseed.cfg"
   try:
         size = inabox_config['vm_size']
         if size in ['small', 'medium', 'large']:
@@ -132,15 +132,15 @@ def mb_to_bytes(mb):
   return bytes 
 
 def create_virtual_server(hostname, size, meta_data):
-    # check if we have a preeseedfile 
-    if os.path.exists(meta_data['preeseed_path']):
-      print("Found preeseed.cfg")
+    # check if we have a preseedfile 
+    if os.path.exists(meta_data['preseed_path']):
+      print("Found preseed.cfg")
     else:
-      print("No preeseed.cfg found")
-      if download_file("https://artifacts.openknowit.com/files/inabox/debian10.preeseed.cfg", meta_data['preeseed_path']):
-        print("Downloaded preeseed.cfg")
+      print("No preseed.cfg found")
+      if download_file("https://artifacts.openknowit.com/files/inabox/debian10.preseed.cfg", meta_data['preseed_path']):
+        print("Downloaded preseed.cfg")
       else:
-        print("Failed to download preeseed.cfg")
+        print("Failed to download preseed.cfg")
         exit(1)
 
     if os.path.exists(meta_data['iso_path']):
