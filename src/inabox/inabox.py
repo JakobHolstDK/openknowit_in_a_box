@@ -108,7 +108,11 @@ def check_the_hosts(hosts, meta_data):
         else:
           print("We dont have a vm")
           size="small"
+          print("Creating a vm")
           process = create_virtual_server(vm_name,size,  meta_data)
+          print("Waiting for process to finish")
+          print(process.pid)
+          process.wait()
           processes[vm_name] = process
 
     for process in processes.values():
