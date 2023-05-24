@@ -159,8 +159,8 @@ def mb_to_bytes(mb):
   return bytes 
 
 def spawn_process(command, stdout_file, stderr_file):
-    full_command = f"nohup {command} >{stdout_file} 2>{stderr_file} &"
-    process = subprocess.Popen(full_command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    process = subprocess.Popen(command, start_new_session=True)
+
     return process
 
 def create_virtual_server(hostname, size, meta_data):
@@ -245,7 +245,7 @@ def main():
     print("Failed to check the hosts")
     exit(1)
   print_status()
-  os.sleep(5000)
+  os.sleep(50)
 
 
   
