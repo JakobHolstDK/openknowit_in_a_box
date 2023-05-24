@@ -2,6 +2,8 @@ import requests
 import subprocess
 import json
 import os
+import sys
+
 
 def check_dns_resolution(hostname):
     command = ['dig', '+short', hostname]
@@ -132,6 +134,10 @@ def mb_to_bytes(mb):
   bytes = mb * 1024 * 1024
   return bytes 
 
+def spawn_process(command):
+    process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    return process.pid
+
 def create_virtual_server(hostname, size, meta_data):
     # check if we have a preseedfile 
     if os.path.exists(meta_data['preseed_path']):
@@ -170,8 +176,7 @@ def create_virtual_server(hostname, size, meta_data):
     ]
 
     # Execute the virt-install command
-    pid=subprocess.Popen(command, close_fds=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-    print(type(pid))
+    pid = spawn_process(command)
     return pid
 
 
