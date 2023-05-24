@@ -192,14 +192,13 @@ def create_virtual_server(hostname, size, meta_data):
     ]
 
     # Execute the virt-install command
-    print(f"Creating virtual server {vm_name}...")
     print(" ".join(command))
-    
+
     process = subprocess.run(command)
     if process.returncode == 0:
-        print(f"Virtual server {vm_name} created successfully.")
+        print(f"Virtual server {hostname} created successfully.")
     else:
-        print(f"Failed to create virtual server {vm_name}.")
+        print(f"Failed to create virtual server {hostname}.")
         exit(1)
 
 
