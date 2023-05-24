@@ -82,24 +82,17 @@ def read_config():
 
 def check_the_hosts(hosts, meta_data):
    for group in hosts.keys():
-      print("---------------")
-      print(meta_data['group_sizes'])
       mysize = hosts[group]['group_size']
       size = meta_data['group_sizes'][0][mysize]
-      print(size)
-
-
-      print("---------------")
-
       for memeber in hosts[group]['members']:
-        print(memeber)
         vm_name = memeber['hostname']
-        if check_if_we_have_a_vm(memeber):
+        if check_if_we_have_a_vm(vm_name):
           print("We have a vm")
         else:
           print("We dont have a vm")
           size
           create_virtual_server(vm_name, size, meta_data)
+
 
 
 
