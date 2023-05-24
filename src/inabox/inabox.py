@@ -81,7 +81,18 @@ def read_config():
   except:
         inabox_config['vm_network'] = "inabox"
   return inabox_config
-
+def check_ssh(hostname):
+  command = ['ssh', hostname, 'echo', 'hello']
+  try:
+    result = subprocess.run(command, capture_output=True, text=True, check=True)
+    ssh_output = result.stdout.strip()
+    if ssh_output == "hello":
+      return True
+    else:
+      return False
+  except subprocess.CalledProcessError:
+    return False
+  
 def check_the_hosts(hosts, meta_data):
     pids = []
     for group in hosts.keys():
@@ -89,6 +100,11 @@ def check_the_hosts(hosts, meta_data):
         vm_name = memeber['hostname']
         if check_if_we_have_a_vm(vm_name):
           print("We have a vm")
+          if is_vm_running(vm_name):
+            print("We have a running vm")
+            if check_ssh(vm_name):
+              print("We have ssh")  
+
         else:
           print("We dont have a vm")
           size="small"
@@ -181,8 +197,30 @@ def create_virtual_server(hostname, size, meta_data):
     return pid
 
 
-
-
+def is_vm_running(vm_name):
+  command = ['virsh', 'list']
+  try:
+    result = subprocess.run(command, capture_output=True, text=True, check=True)
+    virsh_output = result.stdout.strip()
+    if vm_name in virsh_output:
+      return True
+    else:
+      return False
+  except subprocess.CalledProcessError:
+    return False
+  
+def start_vm(vm_name):
+  command = ['virsh', 'start', vm_name]
+  try:
+    result = subprocess.run(command, capture_output=True, text=True, check=True)
+    virsh_output = result.stdout.strip()
+    if vm_name in virsh_output:
+      return True
+    else:
+      return False
+  except subprocess.CalledProcessError:
+    return False
+  
 
 
    
