@@ -82,16 +82,13 @@ def read_config():
 
 def check_the_hosts(hosts, meta_data):
    for group in hosts.keys():
-      mysize = hosts[group]['group_size']
-      size = meta_data['group_sizes'][0][mysize]
       for memeber in hosts[group]['members']:
         vm_name = memeber['hostname']
         if check_if_we_have_a_vm(vm_name):
           print("We have a vm")
         else:
           print("We dont have a vm")
-          size
-          create_virtual_server(vm_name, size, meta_data)
+          create_virtual_server(vm_name, meta_data)
 
 
 
@@ -131,7 +128,7 @@ def mb_to_bytes(mb):
   bytes = mb * 1024 * 1024
   return bytes 
 
-def create_virtual_server(hostname, size, meta_data):
+def create_virtual_server(hostname, meta_data):
     # check if we have a preseedfile 
     if os.path.exists(meta_data['preseed_path']):
       print("Found preseed.cfg")
@@ -153,31 +150,6 @@ def create_virtual_server(hostname, size, meta_data):
         exit(1)
       
     # Construct the virt-install command with preseeding options
-    try:
-        disksize = "size=" + str(size['disk_size'])
-    except:
-        disksize = "size=30"
-    try:
-      if size['memory'] == "auto":
-        memsize = str(mb_to_bytes(10000))
-    except:
-       pass
-    try:
-      if size['memory'].endswith("M"):
-        memsize = str(mb_to_bytes(int(size['memory'].replace("M", ""))))
-    except:
-      pass
-    try:
-      if size['memory'].endswith("G"):
-       memsize = str(mb_to_bytes(int(size['memory'].replace("G", "")) * 1024))
-    except:
-      pass
-    try:
-      if size['memory'].endswith("T"):
-        memsize = str(mb_to_bytes(int(size['memory'].replace("T", "")) * 1024 * 1024))
-    except:
-       pass 
-    location = "http://mirror.one.com/debian-cd/current-live/amd64/iso-hybrid/debian-live-10.8.0-amd64-standard.iso"
     command = [
        "virt-install", 
        "--install","debian11",
