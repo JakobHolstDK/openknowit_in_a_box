@@ -57,7 +57,7 @@ def read_config():
       preceed_path = inabox_config['preceed_path']
   except:
       print("Failed to read iso or preceed path")
-      inabox_config['iso_path'] = "/tmp/debian10,iso"
+      inabox_config['iso_path'] = "iso/debian10,iso"
       inabox_config['preceed_path'] = "preceed.cfg"
   try:
         size = inabox_config['vm_size']
