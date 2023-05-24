@@ -51,74 +51,67 @@ def read_config():
   except:
     print("Failed to read config file")
     exit(1)
-    try:
+
+  try:
       iso_path = inabox_config['iso_path']
       preceed_path = inabox_config['preceed_path']
-    except:
+  except:
       print("Failed to read iso or preceed path")
       inabox_config['iso_path'] = "/tmp/debian10,iso"
       inabox_config['preceed_path'] = "preceed.cfg"
-      try:
+  try:
         size = inabox_config['vm_size']
         if size in ['small', 'medium', 'large']:
           print("We have a valid vm size")
         else:
           print("We dont have a valid vm size")
           inabox_config['vm_size'] = "small"
-      except:
+  except:
         inabox_config['vm_size'] = "small"
       
-      try: 
+  try: 
         network = inabox_config['vm_network']
         if network in ['inabox', 'inabox2']:
           print("We have a valid network")  
         else:
           print("We dont have a valid network")
           inabox_config['vm_network'] = "inabox"
-      except:
+  except:
         inabox_config['vm_network'] = "inabox"
-
-
-          
-        network = inabox_config['vm_network']
-
-      inabox_config['vm_network'] = "inabox"
-      inabox_config['vm_name'] = "inabox"
-      inabox_config['disk_size'] = "10G"
-      inabox_config['ram_size'] = "1024"
-      inabox_config['vm_ip'] = "" 
-      inabox_config['vm_netmask'] = ""
-      inabox_config['vm_gateway'] = ""
-      inabox_config['vm_dns'] = ""
-      inabox_config['vm_domain'] = ""
-      inabox_config['vm_hostname'] = ""
-      inabox_config['vm_user'] = ""
-      inabox_config['vm_password'] = ""
-      inabox_config['vm_root_password'] = ""
-      inabox_config['vm_ssh_key'] = ""
-      inabox_config['vm_ssh_user'] = ""
-      inabox_config['vm_ssh_password'] = ""
-      inabox_config['vm_ssh_port'] = ""
-      inabox_config['vm_ssh_key'] = ""
-
   return inabox_config
 
-def check_the_hosts(hosts):
+def check_the_hosts(hosts, meta_data):
    for group in hosts.keys():
       print("---------------")
       print(hosts[group]['group_size'])
+      print(meta_data['group_sizes'][hosts[group]['group_size']] )
+      print("---------------")
+
       for memeber in hosts[group]['members']:
         print(memeber)
+        vm_name = memeber['hostname']
         if check_if_we_have_a_vm(memeber):
           print("We have a vm")
         else:
           print("We dont have a vm")
-          create_virtual_server(vm_name)
+          size
+          create_virtual_server(vm_name, size, meta_data)
 
 
 
       print("---------------")
 
+def  check_if_we_have_a_vm(vm_name, ):
+  command = ['virsh', 'list', '--all']
+  try:
+    result = subprocess.run(command, capture_output=True, text=True, check=True)
+    virsh_output = result.stdout.strip()
+    if vm_name in virsh_output:
+      return True
+    else:
+      return False
+  except subprocess.CalledProcessError:
+    return False
 
 def download_file(url, filename):
   r = requests.get(url, allow_redirects=True)
@@ -139,9 +132,9 @@ def print_status():
 
   
 
-def create_virtual_server(iso_path, preceed_path, vm_name, disk_size, ram_size):
+def create_virtual_server(hostname, size, meta_data):
     # check if we have a preceedfile 
-    if os.path.exists(preceed_path):
+    if os.path.exists(meta_data['preceed_path']):
       print("Found preceed.cfg")
     else:
       print("No preceed.cfg found")
@@ -151,7 +144,7 @@ def create_virtual_server(iso_path, preceed_path, vm_name, disk_size, ram_size):
         print("Failed to download preceed.cfg")
         exit(1)
 
-    if os.path.exists(iso_path):
+    if os.path.exists(meta_data['iso_path']):
       print("Found iso")
     else:
       if download_file("https://artifacts.openknowit.com/files/inabox/debian10.iso"):
@@ -163,8 +156,8 @@ def create_virtual_server(iso_path, preceed_path, vm_name, disk_size, ram_size):
     # Construct the virt-install command with preseeding options
     command = [
         'virt-install',
-        '--name', vm_name,
-        '--memory', str(ram_size),
+        '--name', hostname,
+        '--memory', str(),
         '--disk', f'size={disk_size}',
         '--cdrom', iso_path,
         '--os-variant', 'debian10',
@@ -193,7 +186,7 @@ def main():
   print(myconf['domain'])
   hosts  = myconf['hosts']
   try:
-    check_the_hosts(hosts)
+    check_the_hosts(hosts, myconf)
   except:
     print("Failed to check the hosts")
     exit(1)
