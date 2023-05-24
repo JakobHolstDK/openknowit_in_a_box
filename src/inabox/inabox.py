@@ -135,7 +135,7 @@ def create_virtual_server(hostname, size, meta_data):
       print("Found preceed.cfg")
     else:
       print("No preceed.cfg found")
-      if download_file("https://artifacts.openknowit.com/files/inabox/debian10.preceed.cfg", "preceed.cfg"):
+      if download_file("https://artifacts.openknowit.com/files/inabox/debian10.preceed.cfg", meta_data['preceed_path']):
         print("Downloaded preceed.cfg")
       else:
         print("Failed to download preceed.cfg")
@@ -144,7 +144,7 @@ def create_virtual_server(hostname, size, meta_data):
     if os.path.exists(meta_data['iso_path']):
       print("Found iso")
     else:
-      if download_file("https://artifacts.openknowit.com/files/inabox/debian10.iso"):
+      if download_file("https://artifacts.openknowit.com/files/inabox/debian10.iso", meta_data['iso_path']):
         print("Downloaded iso")
       else: 
         print("Failed to download iso")
