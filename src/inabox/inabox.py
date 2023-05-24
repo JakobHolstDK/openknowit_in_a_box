@@ -159,8 +159,7 @@ def mb_to_bytes(mb):
   return bytes 
 
 def spawn_process(command, stdout_file, stderr_file):
-    process = subprocess.Popen(command, start_new_session=True)
-
+    process = subprocess.Popen(command, start_new_session=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     return process
 
 def create_virtual_server(hostname, size, meta_data):
