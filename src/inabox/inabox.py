@@ -177,6 +177,7 @@ def create_virtual_server(hostname, size, meta_data):
 
     # Execute the virt-install command
     pid = spawn_process(command)
+    print(f"Spawned virt-install with PID {pid}")
     return pid
 
 
