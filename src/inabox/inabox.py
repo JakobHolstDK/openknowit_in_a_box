@@ -85,8 +85,9 @@ def check_the_hosts(hosts, meta_data):
       print("---------------")
       print(meta_data['group_sizes'])
       mysize = hosts[group]['group_size']
-      print(meta_data['group_sizes'][mysize])
-      size = meta_data['group_sizes'][mysize]
+      size = meta_data['group_sizes'][0][mysize]
+      print(size)
+
 
       print("---------------")
 
