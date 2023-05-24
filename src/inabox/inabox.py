@@ -83,6 +83,8 @@ def read_config():
 def check_the_hosts(hosts, meta_data):
    for group in hosts.keys():
       print("---------------")
+      print(group)
+        
       mysize = hosts[group]['group_size']
       print(meta_data['group_sizes'][mysize])
       size = meta_data['group_sizes'][mysize]
