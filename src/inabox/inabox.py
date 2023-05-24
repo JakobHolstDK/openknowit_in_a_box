@@ -81,14 +81,17 @@ def read_config():
   return inabox_config
 
 def check_the_hosts(hosts, meta_data):
-   for group in hosts.keys():
+    pids = []
+    for group in hosts.keys():
       for memeber in hosts[group]['members']:
         vm_name = memeber['hostname']
         if check_if_we_have_a_vm(vm_name):
           print("We have a vm")
         else:
           print("We dont have a vm")
-          create_virtual_server(vm_name, meta_data)
+          pids.append = create_virtual_server(vm_name, meta_data)
+    for pid in pids:
+      pid.wait()
 
 
 
@@ -128,7 +131,7 @@ def mb_to_bytes(mb):
   bytes = mb * 1024 * 1024
   return bytes 
 
-def create_virtual_server(hostname, meta_data):
+def create_virtual_server(hostname, size, meta_data):
     # check if we have a preseedfile 
     if os.path.exists(meta_data['preseed_path']):
       print("Found preseed.cfg")
@@ -150,24 +153,26 @@ def create_virtual_server(hostname, meta_data):
         exit(1)
       
     # Construct the virt-install command with preseeding options
+    mysize = 50
+    disksize = "size=" + str(mysize)
+    vcpus = 4 
     command = [
        "virt-install", 
        "--install","debian11",
        "--name" , hostname,
+       "--memory", "1024",
+       "--vcpus", "1",
+       "--disk", disksize,
        "--initrd-inject" , "./preseed.cfg",
        "--extra-args", "debian/priority=critical", 
        "--noreboot"
     ]
 
     # Execute the virt-install command
-    print(" ".join(command))
+    pid= subprocess.Popen(command)
+    return pid
 
-    process = subprocess.run(command)
-    if process.returncode == 0:
-        print(f"Virtual server {hostname} created successfully.")
-    else:
-        print(f"Failed to create virtual server {hostname}.")
-        exit(1)
+
 
 
 
@@ -179,7 +184,6 @@ def main():
   myconf = read_config()
   print(myconf['domain'])
   hosts  = myconf['hosts']
-  check_the_hosts(hosts, myconf)
   try:
     check_the_hosts(hosts, myconf)
   except:
