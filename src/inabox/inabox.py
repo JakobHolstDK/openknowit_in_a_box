@@ -86,7 +86,7 @@ def check_the_hosts(hosts, meta_data):
       mysize = hosts[group]['group_size']
       print(meta_data['group_sizes'][mysize])
       size = meta_data['group_sizes'][mysize]
-      
+
       print("---------------")
 
       for memeber in hosts[group]['members']:
@@ -187,6 +187,7 @@ def main():
   myconf = read_config()
   print(myconf['domain'])
   hosts  = myconf['hosts']
+  check_the_hosts(hosts, myconf)
   try:
     check_the_hosts(hosts, myconf)
   except:
