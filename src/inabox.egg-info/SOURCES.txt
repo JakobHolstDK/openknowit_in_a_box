@@ -1,0 +1,11 @@
+LICENSE
+MANIFEST.in
+README.md
+pyproject.toml
+src/inabox/__init__.py
+src/inabox/inabox.py
+src/inabox.egg-info/PKG-INFO
+src/inabox.egg-info/SOURCES.txt
+src/inabox.egg-info/dependency_links.txt
+src/inabox.egg-info/top_level.txt
+tests/test_inabox.py

@@ -1,0 +1,17 @@
+[build-system]
+requires = [
+"poetry-core>=1.0.0"
+]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "inabox"
+version = "0.1.0"
+description = "My Python project in a box"
+authors = ["Your Name <your.email@example.com>"]
+
+[tool.poetry.scripts]
+inabox = "inabox.inabox:main"
+
+[tool.poetry.dependencies]
+python = "^3.8"
