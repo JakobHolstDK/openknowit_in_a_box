@@ -127,7 +127,9 @@ def print_status():
   print("-------"
         )
 
-  
+def mb_to_bytes(mb):
+  bytes = mb * 1024 * 1024
+  return bytes 
 
 def create_virtual_server(hostname, size, meta_data):
     # check if we have a preceedfile 
@@ -151,6 +153,15 @@ def create_virtual_server(hostname, size, meta_data):
         exit(1)
       
     # Construct the virt-install command with preseeding options
+    if size['disk_size'] == "auto":
+      size['disk_size'] = mb_to_bytes(10000)
+    if size['disk_size'].endswith("M"):
+      size['disk_size'] = mb_to_bytes(int(size['disk_size'].replace("M", "")))
+    if size['disk_size'].endswith("G"):
+      size['disk_size'] = mb_to_bytes(int(size['disk_size'].replace("G", "")) * 1024)
+    if size['disk_size'].endswith("T"):
+      size['disk_size'] = mb_to_bytes(int(size['disk_size'].replace("T", "")) * 1024 * 1024)
+      
     command = [
         'virt-install',
         '--name', hostname,
