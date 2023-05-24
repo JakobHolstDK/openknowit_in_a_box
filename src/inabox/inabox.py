@@ -244,6 +244,8 @@ def main():
   except:
     print("Failed to check the hosts")
     exit(1)
+  print_status()
+  os.sleep(50)
 
 
   
