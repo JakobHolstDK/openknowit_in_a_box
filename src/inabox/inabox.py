@@ -112,6 +112,8 @@ def check_the_hosts(hosts, meta_data):
           processes[vm_name] = process
 
     for process in processes.values():
+      print("Waiting for process to finish")
+      print(process.pid)
       process.wait()
 
 
