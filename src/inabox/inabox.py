@@ -94,7 +94,7 @@ def check_ssh(hostname):
     return False
   
 def check_the_hosts(hosts, meta_data):
-    pids = []
+    processes = {}
     for group in hosts.keys():
       for memeber in hosts[group]['members']:
         vm_name = memeber['hostname']
@@ -108,11 +108,11 @@ def check_the_hosts(hosts, meta_data):
         else:
           print("We dont have a vm")
           size="small"
-          pid = create_virtual_server(vm_name,size,  meta_data)
-          print(pid)
+          process = create_virtual_server(vm_name,size,  meta_data)
+          processes[vm_name] = process
 
-    for pid in pids:
-      pid.wait()
+    for process in processes.values():
+      process.wait()
 
 
 
@@ -154,8 +154,7 @@ def mb_to_bytes(mb):
 
 def spawn_process(command):
     process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    os.sleep(5)
-    return process.pid
+    return process
 
 def create_virtual_server(hostname, size, meta_data):
     # check if we have a preseedfile 
@@ -195,9 +194,9 @@ def create_virtual_server(hostname, size, meta_data):
     ]
 
     # Execute the virt-install command
-    pid = spawn_process(command)
+    process = spawn_process(command)
     print(f"Spawned virt-install with PID {pid}")
-    return pid
+    return process
 
 
 def is_vm_running(vm_name):
