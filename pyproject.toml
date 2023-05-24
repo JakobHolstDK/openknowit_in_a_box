@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "inabox"
-version = "0.5.8"
+version = "0.5.9"
 description = "Knowit Automation lifecycle management"
 authors = ["Jakob Holst <jakob.holst@knowit.dk>"]
 license = "MIT"
@@ -18,7 +18,7 @@ requests = "^2.25"
 
 [project]
 name = "inabox"  
-version = "0.2.0-Development" 
+version = "0.5.9-Development" 
 description = "Knowit automation lifecycle management"
 readme = "README.md" # Optional
 requires-python = ">=3.7"
