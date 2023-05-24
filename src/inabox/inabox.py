@@ -159,9 +159,9 @@ def mb_to_bytes(mb):
   return bytes 
 
 def spawn_process(command, stdout_file, stderr_file):
-    with open(stdout_file, 'w') as stdout, open(stderr_file, 'w') as stderr:
-        process = subprocess.Popen(command, shell=True, stdout=stdout, stderr=stderr)
-        return process
+    full_command = f"nohup {command} >{stdout_file} 2>{stderr_file} &"
+    process = subprocess.Popen(full_command, shell=True)
+    return process
 
 def create_virtual_server(hostname, size, meta_data):
     # check if we have a preseedfile 
