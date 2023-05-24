@@ -154,25 +154,9 @@ def create_virtual_server(hostname, size, meta_data):
       
     # Construct the virt-install command with preseeding options
     try:
-      if size['disk_size'] == "auto":
-        disksize = "size=" + str(mb_to_bytes(10000))
+        disksize = "size=" + str(size['disk_size'])
     except:
-       pass
-    try:
-      if size['disk_size'].endswith("M"):
-        disksize = "size=" + str(mb_to_bytes(int(size['disk_size'].replace("M", ""))))
-    except:
-      pass
-    try:
-      if size['disk_size'].endswith("G"):
-       disksize = "size=" + str(mb_to_bytes(int(size['disk_size'].replace("G", "")) * 1024))
-    except:
-      pass
-    try:
-      if size['disk_size'].endswith("T"):
-        disksize = "size=" + str(mb_to_bytes(int(size['disk_size'].replace("T", "")) * 1024 * 1024))
-    except:
-       pass
+        disksize = "size=30"
     try:
       if size['memory'] == "auto":
         memsize = str(mb_to_bytes(10000))
