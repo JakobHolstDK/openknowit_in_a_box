@@ -190,11 +190,12 @@ def create_virtual_server(hostname, size, meta_data):
        "virt-install", 
        "--install","debian11",
        "--name" , hostname,
-       "--memory", "1024",
-       "--vcpus", "1",
+       "--memory", "8192",
+       "--vcpus", "6",
        "--disk", disksize,
        "--initrd-inject" , "./preseed.cfg",
        "--extra-args", "debian/priority=critical", 
+       "--noautoconsole",
        "--noreboot"
     ]
 
