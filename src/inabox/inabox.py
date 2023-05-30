@@ -238,7 +238,6 @@ def main():
   myconf = read_config()
   print(myconf['domain'])
   hosts  = myconf['hosts']
-  check_the_hosts(hosts, myconf)
   try:
     check_the_hosts(hosts, myconf)
   except:
