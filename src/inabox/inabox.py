@@ -3,6 +3,26 @@ import subprocess
 import json
 import os
 import sys
+import libvirt
+
+conn = libvirt.open()
+
+if conn is None:
+    print('Failed to open connection to the hypervisor.')
+    exit(1)
+
+def get_servers():
+  domains = conn.listAllDomains()
+  print('List of KVM virtual machines:')
+  for domain in domains:
+    name = domain.name()
+    state, _ = domain.state()
+    state_str = libvirt.VIR_DOMAIN_STATE_LOOKUP[state][0]
+    print(f'Name: {name}, State: {state_str}')
+  conn.close()
+  return domains
+
+
 
 
 def check_dns_resolution(hostname):
@@ -233,6 +253,8 @@ def start_vm(vm_name):
 
    
 def main():
+  get_servers()
+  
   print("Starting inabox")
   checkservice()
   myconf = read_config()
