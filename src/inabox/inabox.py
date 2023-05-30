@@ -99,7 +99,7 @@ def check_the_hosts(hosts, meta_data):
       for memeber in hosts[group]['members']:
         vm_name = memeber['hostname']
         if check_if_we_have_a_vm(vm_name):
-          print("We have a vm")
+          print("We have a vm:" + vm_name ) 
           if is_vm_running(vm_name):
             print("We have a running vm")
             if check_ssh(vm_name):
